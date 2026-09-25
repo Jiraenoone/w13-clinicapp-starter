@@ -7,7 +7,12 @@ import { getSqlPool } from './db.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.options('*', cors());
 app.use(express.json());
 
 app.get('/', (_req, res) => res.json({ ok: true, service: 'clinic-api' }));
@@ -54,6 +59,7 @@ app.post('/appointments', async (req, res, next) => {
 });
 
 app.use((err, _req, res, _next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   if (err.code === 'NO_DB_CONFIG') {
     return res.status(503).json({
       error: 'database_not_configured',
