@@ -1,3 +1,23 @@
+output_location: "dist"
+```[cite: 20]
+
+---
+
+### จุดที่ 2: เพิ่ม `env:` เพื่อบอกให้เว็บรู้ URL ของ API
+เพิ่มบล็อก **`env:`** ต่อท้ายใต้ส่วน `output_location: "dist"` เพื่อชี้ไปยัง URL ของ API ที่ทำไว้ใน CP3 ครับ[cite: 21]
+
+```yaml
+          output_location: "dist" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
+        env:
+          VITE_API_BASE: https://app-clinicapp-api-jiraenoone-cbfcaycdcsfyavbt.centralindia-01.azurewebsites.net
+```[cite: 13, 21]
+
+---
+
+### โค้ดที่แก้ไขสมบูรณ์แล้ว (คัดลอกไปวางทับได้เลย)
+
+```yaml
 name: Azure Static Web Apps CI/CD
 
 on:
@@ -30,8 +50,10 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "./web" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "build" # Built app content directory - optional
+          output_location: "dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          VITE_API_BASE: https://app-clinicapp-api-jiraenoone-cbfcaycdcsfyavbt.centralindia-01.azurewebsites.net
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
